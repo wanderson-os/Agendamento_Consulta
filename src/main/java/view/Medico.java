@@ -5,6 +5,18 @@
  */
 package view;
 
+import Dao.MedicoDao;
+import java.awt.Component;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import model.Opcao;
+import model.ConsultaModel;
+import model.MedicoModel;
+import model.PacienteModel;
+
 /**
  *
  * @author Wanderson
@@ -12,10 +24,17 @@ package view;
 public class Medico extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Medico
+     * Creates new form MedicoModel
      */
+    Opcao opcao;
+    MedicoDao medicoDao;
+    ArrayList<MedicoModel> medicos;
+
     public Medico() {
+        medicoDao = new MedicoDao();
         initComponents();
+        jTabbedPane1.setEnabled(false);
+
     }
 
     /**
@@ -28,59 +47,343 @@ public class Medico extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        Cadastrar = new javax.swing.JPanel();
+        jpCamposCad = new javax.swing.JPanel();
+        jlNomeCad = new javax.swing.JLabel();
+        tfNomeCad = new javax.swing.JTextField();
+        jlCrmCad = new javax.swing.JLabel();
+        tfCrmCad = new javax.swing.JTextField();
+        btnSalvarCad = new javax.swing.JButton();
+        btnFecharCad = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jpCamposCons = new javax.swing.JPanel();
+        jlNomeCons = new javax.swing.JLabel();
+        tfNomeCons = new javax.swing.JTextField();
+        jlCrmCons = new javax.swing.JLabel();
+        tfCrmCons = new javax.swing.JTextField();
+        btnFecharCons = new javax.swing.JButton();
+        cbxNomeCons = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
+        jpCamposAlt = new javax.swing.JPanel();
+        jlNomeAlt = new javax.swing.JLabel();
+        tfNomeAlt = new javax.swing.JTextField();
+        jlCrmAlt = new javax.swing.JLabel();
+        tfCrmAlt = new javax.swing.JTextField();
+        btnSalvarAlt = new javax.swing.JButton();
+        btnFecharAlt = new javax.swing.JButton();
+        cbxNomeAlt = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
+        jpCamposExc = new javax.swing.JPanel();
+        jlNomeExc = new javax.swing.JLabel();
+        tfNomeExc = new javax.swing.JTextField();
+        jlCrmExc = new javax.swing.JLabel();
+        tfCrmExc = new javax.swing.JTextField();
+        btnExcluir = new javax.swing.JButton();
+        btnFecharExc = new javax.swing.JButton();
+        cbxNomeExc = new javax.swing.JComboBox<>();
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+        jlNomeCad.setText("Nome");
+
+        jlCrmCad.setText("CRM");
+
+        btnSalvarCad.setText("Salvar");
+        btnSalvarCad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarCadActionPerformed(evt);
+            }
+        });
+
+        btnFecharCad.setText("Fechar");
+        btnFecharCad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharCadActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpCamposCadLayout = new javax.swing.GroupLayout(jpCamposCad);
+        jpCamposCad.setLayout(jpCamposCadLayout);
+        jpCamposCadLayout.setHorizontalGroup(
+            jpCamposCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCamposCadLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jpCamposCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlNomeCad)
+                    .addComponent(jlCrmCad))
+                .addGap(18, 18, 18)
+                .addGroup(jpCamposCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfNomeCad, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addGroup(jpCamposCadLayout.createSequentialGroup()
+                        .addComponent(tfCrmCad, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(btnSalvarCad)
+                        .addGap(60, 60, 60)
+                        .addComponent(btnFecharCad)))
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
+        jpCamposCadLayout.setVerticalGroup(
+            jpCamposCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCamposCadLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCamposCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlNomeCad)
+                    .addComponent(tfNomeCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpCamposCadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCrmCad)
+                    .addComponent(tfCrmCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalvarCad)
+                    .addComponent(btnFecharCad))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cadastrar", jPanel1);
+        javax.swing.GroupLayout CadastrarLayout = new javax.swing.GroupLayout(Cadastrar);
+        Cadastrar.setLayout(CadastrarLayout);
+        CadastrarLayout.setHorizontalGroup(
+            CadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jpCamposCad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        CadastrarLayout.setVerticalGroup(
+            CadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CadastrarLayout.createSequentialGroup()
+                .addContainerGap(65, Short.MAX_VALUE)
+                .addComponent(jpCamposCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Cadastrar", Cadastrar);
+
+        jlNomeCons.setText("Nome");
+
+        jlCrmCons.setText("CRM");
+
+        btnFecharCons.setText("Fechar");
+        btnFecharCons.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharConsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpCamposConsLayout = new javax.swing.GroupLayout(jpCamposCons);
+        jpCamposCons.setLayout(jpCamposConsLayout);
+        jpCamposConsLayout.setHorizontalGroup(
+            jpCamposConsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCamposConsLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jpCamposConsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlNomeCons)
+                    .addComponent(jlCrmCons))
+                .addGap(18, 18, 18)
+                .addGroup(jpCamposConsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfNomeCons, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addGroup(jpCamposConsLayout.createSequentialGroup()
+                        .addComponent(tfCrmCons, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(184, 184, 184)
+                        .addComponent(btnFecharCons)))
+                .addContainerGap())
+        );
+        jpCamposConsLayout.setVerticalGroup(
+            jpCamposConsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCamposConsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCamposConsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlNomeCons)
+                    .addComponent(tfNomeCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpCamposConsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCrmCons)
+                    .addComponent(tfCrmCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFecharCons))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        cbxNomeCons.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxNomeConsItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addComponent(jpCamposCons, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxNomeCons, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(145, 145, 145))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxNomeCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jpCamposCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Consultar", jPanel2);
+
+        jlNomeAlt.setText("Nome");
+
+        jlCrmAlt.setText("CRM");
+
+        btnSalvarAlt.setText("Salvar");
+        btnSalvarAlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarAltActionPerformed(evt);
+            }
+        });
+
+        btnFecharAlt.setText("Fechar");
+        btnFecharAlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharAltActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpCamposAltLayout = new javax.swing.GroupLayout(jpCamposAlt);
+        jpCamposAlt.setLayout(jpCamposAltLayout);
+        jpCamposAltLayout.setHorizontalGroup(
+            jpCamposAltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCamposAltLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jpCamposAltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlNomeAlt)
+                    .addComponent(jlCrmAlt))
+                .addGap(18, 18, 18)
+                .addGroup(jpCamposAltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfNomeAlt, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addGroup(jpCamposAltLayout.createSequentialGroup()
+                        .addComponent(tfCrmAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(btnSalvarAlt)
+                        .addGap(60, 60, 60)
+                        .addComponent(btnFecharAlt)))
+                .addContainerGap())
+        );
+        jpCamposAltLayout.setVerticalGroup(
+            jpCamposAltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCamposAltLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCamposAltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlNomeAlt)
+                    .addComponent(tfNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpCamposAltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCrmAlt)
+                    .addComponent(tfCrmAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalvarAlt)
+                    .addComponent(btnFecharAlt))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        cbxNomeAlt.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxNomeAltItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addComponent(jpCamposAlt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(140, 140, 140))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jpCamposAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Alterar", jPanel3);
+
+        jlNomeExc.setText("Nome");
+
+        jlCrmExc.setText("CRM");
+
+        btnExcluir.setText("Exclui");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        btnFecharExc.setText("Fechar");
+        btnFecharExc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharExcActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpCamposExcLayout = new javax.swing.GroupLayout(jpCamposExc);
+        jpCamposExc.setLayout(jpCamposExcLayout);
+        jpCamposExcLayout.setHorizontalGroup(
+            jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCamposExcLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlNomeExc)
+                    .addComponent(jlCrmExc))
+                .addGap(18, 18, 18)
+                .addGroup(jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfNomeExc, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addGroup(jpCamposExcLayout.createSequentialGroup()
+                        .addComponent(tfCrmExc, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(btnExcluir)
+                        .addGap(60, 60, 60)
+                        .addComponent(btnFecharExc)))
+                .addContainerGap())
+        );
+        jpCamposExcLayout.setVerticalGroup(
+            jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCamposExcLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlNomeExc)
+                    .addComponent(tfNomeExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCrmExc)
+                    .addComponent(tfCrmExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir)
+                    .addComponent(btnFecharExc))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        cbxNomeExc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxNomeExcItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addComponent(jpCamposExc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxNomeExc, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(144, 144, 144))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxNomeExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jpCamposExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Excluir", jPanel4);
@@ -99,12 +402,198 @@ public class Medico extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadActionPerformed
+
+        int quat = VerificaCampos(jpCamposCad);
+        if (quat == 2) {
+            MedicoModel medico = new MedicoModel(Integer.parseInt(tfCrmCad.getText()), tfNomeCad.getText());
+            int ret = medicoDao.cadastrar(medico);
+            if (ret == 1) {
+                JOptionPane.showConfirmDialog(this, "Dados cadastrados !", "Cadastrado com sucesso", JOptionPane.DEFAULT_OPTION);
+                if (JOptionPane.DEFAULT_OPTION == -1) {
+                    dispose();
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(jpCamposCad, "Preencha todos os campos !");
+        }
+
+    }//GEN-LAST:event_btnSalvarCadActionPerformed
+
+    private void cbxNomeConsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNomeConsItemStateChanged
+        tfCrmCons.setText(String.valueOf(medicos.get(cbxNomeCons.getSelectedIndex()).getCrm()));
+        tfNomeCons.setText(medicos.get(cbxNomeCons.getSelectedIndex()).getNome());
+
+    }//GEN-LAST:event_cbxNomeConsItemStateChanged
+
+    private void cbxNomeAltItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNomeAltItemStateChanged
+        tfCrmAlt.setText(String.valueOf(medicos.get(cbxNomeAlt.getSelectedIndex()).getCrm()));
+        tfNomeAlt.setText(medicos.get(cbxNomeAlt.getSelectedIndex()).getNome());
+    }//GEN-LAST:event_cbxNomeAltItemStateChanged
+
+    private void cbxNomeExcItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNomeExcItemStateChanged
+        tfCrmExc.setText(String.valueOf(medicos.get(cbxNomeExc.getSelectedIndex()).getCrm()));
+        tfNomeExc.setText(medicos.get(cbxNomeExc.getSelectedIndex()).getNome());
+    }//GEN-LAST:event_cbxNomeExcItemStateChanged
+
+    private void btnSalvarAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAltActionPerformed
+        MedicoModel medico = medicos.get(cbxNomeAlt.getSelectedIndex());
+        medico.setCrm(Integer.parseInt(tfCrmAlt.getText()));
+        medico.setNome(tfNomeAlt.getText());
+        int ret = medicoDao.alterar(medico);
+        if (ret == 1) {
+            JOptionPane.showConfirmDialog(this, "Alterado !", "Alterado com sucesso", JOptionPane.DEFAULT_OPTION);
+            if (JOptionPane.DEFAULT_OPTION == -1) {
+                dispose();
+            }
+        }
+
+
+    }//GEN-LAST:event_btnSalvarAltActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int op = JOptionPane.showInternalConfirmDialog(this, "Quer mesmo Excluir ?", "Excluir",
+                JOptionPane.YES_NO_OPTION);
+        if (op == JOptionPane.YES_OPTION) {
+            MedicoModel medico = medicos.get(cbxNomeExc.getSelectedIndex());
+            int ret = medicoDao.excluir(medico);
+            if (ret == 1) {
+                JOptionPane.showConfirmDialog(this, "Excluido !", "Excluido com sucesso", JOptionPane.DEFAULT_OPTION);
+                if (JOptionPane.DEFAULT_OPTION == -1) {
+                    dispose();
+                }
+            }
+            dispose();
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnFecharConsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharConsActionPerformed
+        int op = JOptionPane.showInternalConfirmDialog(this, "Quer mesmo Fechar ?", "Fechar",
+                JOptionPane.YES_NO_OPTION);
+        if (op == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+
+
+    }//GEN-LAST:event_btnFecharConsActionPerformed
+
+    private void btnFecharAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharAltActionPerformed
+        int op = JOptionPane.showInternalConfirmDialog(this, "Quer mesmo Fechar ?", "Fechar",
+                JOptionPane.YES_NO_OPTION);
+        if (op == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+     }//GEN-LAST:event_btnFecharAltActionPerformed
+
+    private void btnFecharExcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharExcActionPerformed
+        int op = JOptionPane.showInternalConfirmDialog(this, "Quer mesmo Fechar ?", "Fechar",
+                JOptionPane.YES_NO_OPTION);
+        if (op == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+     }//GEN-LAST:event_btnFecharExcActionPerformed
+
+    private void btnFecharCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharCadActionPerformed
+        int op = JOptionPane.showInternalConfirmDialog(this, "Quer mesmo Fechar ?", "Fechar",
+                JOptionPane.YES_NO_OPTION);
+        if (op == JOptionPane.YES_OPTION) {
+            dispose();
+        }    }//GEN-LAST:event_btnFecharCadActionPerformed
+
+    public void selecionado(Opcao op) {
+        if (op == opcao.CADASTRAR) {
+            jTabbedPane1.setSelectedIndex(0);
+
+        }
+        if (op == opcao.CONSULTAR) {
+            jTabbedPane1.setSelectedIndex(1);
+            medicos = medicoDao.listar();
+            carregaCampos(cbxNomeCons);
+        }
+        if (op == opcao.ALTERAR) {
+            jTabbedPane1.setSelectedIndex(2);
+            medicos = medicoDao.listar();
+            carregaCampos(cbxNomeAlt);
+
+        }
+        if (op == opcao.EXCLUIR) {
+            jTabbedPane1.setSelectedIndex(3);
+            medicos = medicoDao.listar();
+            carregaCampos(cbxNomeExc);
+
+        }
+    }
+
+    public void carregaCampos(JComboBox cbx) {
+
+        for (MedicoModel medico : medicos) {
+            cbx.addItem(medico.getNome());
+        }
+
+    }
+
+    public void habilitarCampos(JPanel jpanel, boolean habilita) {
+        Component[] com = jpanel.getComponents();
+        for (Component component : com) {
+            if (component instanceof JTextField) {
+                JTextField tf = (JTextField) component;
+                tf.setEnabled(habilita);
+
+            }
+        }
+
+    }
+
+    public int VerificaCampos(JPanel jpanel) {
+        Component[] com = jpanel.getComponents();
+        int cont = 0;
+        for (Component component : com) {
+            if (component instanceof JTextField) {
+                JTextField tf = (JTextField) component;
+                if (!tf.getText().equals("")) {
+                    cont += 1;
+                }
+            }
+        }
+        return cont;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel Cadastrar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnFecharAlt;
+    private javax.swing.JButton btnFecharCad;
+    private javax.swing.JButton btnFecharCons;
+    private javax.swing.JButton btnFecharExc;
+    private javax.swing.JButton btnSalvarAlt;
+    private javax.swing.JButton btnSalvarCad;
+    private javax.swing.JComboBox<String> cbxNomeAlt;
+    private javax.swing.JComboBox<String> cbxNomeCons;
+    private javax.swing.JComboBox<String> cbxNomeExc;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel jlCrmAlt;
+    private javax.swing.JLabel jlCrmCad;
+    private javax.swing.JLabel jlCrmCons;
+    private javax.swing.JLabel jlCrmExc;
+    private javax.swing.JLabel jlNomeAlt;
+    private javax.swing.JLabel jlNomeCad;
+    private javax.swing.JLabel jlNomeCons;
+    private javax.swing.JLabel jlNomeExc;
+    private javax.swing.JPanel jpCamposAlt;
+    private javax.swing.JPanel jpCamposCad;
+    private javax.swing.JPanel jpCamposCons;
+    private javax.swing.JPanel jpCamposExc;
+    private javax.swing.JTextField tfCrmAlt;
+    private javax.swing.JTextField tfCrmCad;
+    private javax.swing.JTextField tfCrmCons;
+    private javax.swing.JTextField tfCrmExc;
+    private javax.swing.JTextField tfNomeAlt;
+    private javax.swing.JTextField tfNomeCad;
+    private javax.swing.JTextField tfNomeCons;
+    private javax.swing.JTextField tfNomeExc;
     // End of variables declaration//GEN-END:variables
 }

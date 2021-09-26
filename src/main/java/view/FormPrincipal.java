@@ -5,6 +5,8 @@
  */
 package view;
 
+import model.Opcao;
+
 /**
  *
  * @author Wanderson
@@ -14,6 +16,8 @@ public class FormPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form FormPrincipal
      */
+    Opcao opcao;
+
     public FormPrincipal() {
         initComponents();
     }
@@ -29,26 +33,24 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jmCadastrar = new javax.swing.JMenu();
+        jmMedicoCad = new javax.swing.JMenuItem();
+        jmPacienteCad = new javax.swing.JMenuItem();
+        jmConsultaCad = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
+        jmMedicoCons = new javax.swing.JMenuItem();
+        jmPacienteCons = new javax.swing.JMenuItem();
+        jmConsultaCons = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
+        jmMedicoAlt = new javax.swing.JMenuItem();
+        jmPacienteAlt = new javax.swing.JMenuItem();
+        jmConsultaAlt = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
+        jmMedicoExc = new javax.swing.JMenuItem();
+        jmPacienteExc = new javax.swing.JMenuItem();
+        jmConsultaExc = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -57,47 +59,78 @@ public class FormPrincipal extends javax.swing.JFrame {
         jDesktopPane2.add(jLabel3);
         jLabel3.setBounds(0, -30, 850, 610);
 
-        jScrollPane1.setViewportView(jTextPane1);
-
-        jDesktopPane2.add(jScrollPane1);
-        jScrollPane1.setBounds(360, 240, 64, 22);
-
         jMenu1.setMnemonic('f');
         jMenu1.setText("File");
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/create.png"))); // NOI18N
-        jMenu2.setMnemonic('c');
-        jMenu2.setText("Cadastrar");
+        jmCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/create.png"))); // NOI18N
+        jmCadastrar.setMnemonic('c');
+        jmCadastrar.setText("Cadastrar");
 
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medico.png"))); // NOI18N
-        jMenuItem5.setText("Medico");
-        jMenu2.add(jMenuItem5);
+        jmMedicoCad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmMedicoCad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medico.png"))); // NOI18N
+        jmMedicoCad.setText("Medico");
+        jmMedicoCad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmMedicoCadActionPerformed(evt);
+            }
+        });
+        jmCadastrar.add(jmMedicoCad);
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paciente.png"))); // NOI18N
-        jMenuItem1.setText("Paciente");
-        jMenu2.add(jMenuItem1);
+        jmPacienteCad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmPacienteCad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paciente.png"))); // NOI18N
+        jmPacienteCad.setText("Paciente");
+        jmPacienteCad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmPacienteCadActionPerformed(evt);
+            }
+        });
+        jmCadastrar.add(jmPacienteCad);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consulta.png"))); // NOI18N
-        jMenuItem2.setText("Consulta");
-        jMenu2.add(jMenuItem2);
+        jmConsultaCad.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmConsultaCad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consulta.png"))); // NOI18N
+        jmConsultaCad.setText("Consulta");
+        jmConsultaCad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmConsultaCadActionPerformed(evt);
+            }
+        });
+        jmCadastrar.add(jmConsultaCad);
 
-        jMenu1.add(jMenu2);
+        jMenu1.add(jmCadastrar);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/read.png"))); // NOI18N
         jMenu3.setMnemonic('o');
         jMenu3.setText("Consultar");
 
-        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medico.png"))); // NOI18N
-        jMenuItem13.setText("Medico");
-        jMenu3.add(jMenuItem13);
+        jmMedicoCons.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmMedicoCons.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medico.png"))); // NOI18N
+        jmMedicoCons.setText("Medico");
+        jmMedicoCons.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmMedicoConsActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmMedicoCons);
 
-        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paciente.png"))); // NOI18N
-        jMenuItem14.setText("Paciente");
-        jMenu3.add(jMenuItem14);
+        jmPacienteCons.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmPacienteCons.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paciente.png"))); // NOI18N
+        jmPacienteCons.setText("Paciente");
+        jmPacienteCons.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmPacienteConsActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmPacienteCons);
 
-        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consulta.png"))); // NOI18N
-        jMenuItem15.setText("Consulta");
-        jMenu3.add(jMenuItem15);
+        jmConsultaCons.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmConsultaCons.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consulta.png"))); // NOI18N
+        jmConsultaCons.setText("Consulta");
+        jmConsultaCons.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmConsultaConsActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jmConsultaCons);
 
         jMenu1.add(jMenu3);
 
@@ -105,17 +138,35 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenu4.setMnemonic('a');
         jMenu4.setText("Alterar");
 
-        jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medico.png"))); // NOI18N
-        jMenuItem16.setText("Medico");
-        jMenu4.add(jMenuItem16);
+        jmMedicoAlt.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmMedicoAlt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medico.png"))); // NOI18N
+        jmMedicoAlt.setText("Medico");
+        jmMedicoAlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmMedicoAltActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmMedicoAlt);
 
-        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paciente.png"))); // NOI18N
-        jMenuItem17.setText("Paciente");
-        jMenu4.add(jMenuItem17);
+        jmPacienteAlt.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmPacienteAlt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paciente.png"))); // NOI18N
+        jmPacienteAlt.setText("Paciente");
+        jmPacienteAlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmPacienteAltActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmPacienteAlt);
 
-        jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consulta.png"))); // NOI18N
-        jMenuItem18.setText("Consulta");
-        jMenu4.add(jMenuItem18);
+        jmConsultaAlt.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmConsultaAlt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consulta.png"))); // NOI18N
+        jmConsultaAlt.setText("Consulta");
+        jmConsultaAlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmConsultaAltActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmConsultaAlt);
 
         jMenu1.add(jMenu4);
 
@@ -123,17 +174,35 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenu5.setMnemonic('e');
         jMenu5.setText("Excluir");
 
-        jMenuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medico.png"))); // NOI18N
-        jMenuItem19.setText("Medico");
-        jMenu5.add(jMenuItem19);
+        jmMedicoExc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmMedicoExc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medico.png"))); // NOI18N
+        jmMedicoExc.setText("Medico");
+        jmMedicoExc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmMedicoExcActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmMedicoExc);
 
-        jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paciente.png"))); // NOI18N
-        jMenuItem20.setText("Paciente");
-        jMenu5.add(jMenuItem20);
+        jmPacienteExc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmPacienteExc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paciente.png"))); // NOI18N
+        jmPacienteExc.setText("Paciente");
+        jmPacienteExc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmPacienteExcActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmPacienteExc);
 
-        jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consulta.png"))); // NOI18N
-        jMenuItem21.setText("Consulta");
-        jMenu5.add(jMenuItem21);
+        jmConsultaExc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmConsultaExc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/consulta.png"))); // NOI18N
+        jmConsultaExc.setText("Consulta");
+        jmConsultaExc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmConsultaExcActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmConsultaExc);
 
         jMenu1.add(jMenu5);
 
@@ -155,6 +224,83 @@ public class FormPrincipal extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jmMedicoCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmMedicoCadActionPerformed
+        Medico medico = new Medico();
+        jDesktopPane2.add(medico);
+        medico.setVisible(true);
+        medico.selecionado(opcao.CADASTRAR);
+    }//GEN-LAST:event_jmMedicoCadActionPerformed
+
+    private void jmPacienteCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPacienteCadActionPerformed
+        Paciente paciente = new Paciente();
+        jDesktopPane2.add(paciente);
+        paciente.setVisible(true);
+        paciente.selecionado(opcao.CADASTRAR);
+
+    }//GEN-LAST:event_jmPacienteCadActionPerformed
+
+    private void jmConsultaCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmConsultaCadActionPerformed
+        Consulta consulta = new Consulta();
+        jDesktopPane2.add(consulta);
+        consulta.setVisible(true);
+        consulta.selecionado(opcao.CADASTRAR);
+
+    }//GEN-LAST:event_jmConsultaCadActionPerformed
+
+    private void jmMedicoConsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmMedicoConsActionPerformed
+        Medico medico = new Medico();
+        jDesktopPane2.add(medico);
+        medico.setVisible(true);
+        medico.selecionado(opcao.CONSULTAR);    }//GEN-LAST:event_jmMedicoConsActionPerformed
+
+    private void jmPacienteConsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPacienteConsActionPerformed
+        Paciente paciente = new Paciente();
+        jDesktopPane2.add(paciente);
+        paciente.setVisible(true);
+        paciente.selecionado(opcao.CONSULTAR);    }//GEN-LAST:event_jmPacienteConsActionPerformed
+
+    private void jmConsultaConsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmConsultaConsActionPerformed
+        Consulta consulta = new Consulta();
+        jDesktopPane2.add(consulta);
+        consulta.setVisible(true);
+        consulta.selecionado(opcao.CONSULTAR);    }//GEN-LAST:event_jmConsultaConsActionPerformed
+
+    private void jmMedicoAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmMedicoAltActionPerformed
+        Medico medico = new Medico();
+        jDesktopPane2.add(medico);
+        medico.setVisible(true);
+        medico.selecionado(opcao.ALTERAR);    }//GEN-LAST:event_jmMedicoAltActionPerformed
+
+    private void jmPacienteAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPacienteAltActionPerformed
+        Paciente paciente = new Paciente();
+        jDesktopPane2.add(paciente);
+        paciente.setVisible(true);
+        paciente.selecionado(opcao.ALTERAR);    }//GEN-LAST:event_jmPacienteAltActionPerformed
+
+    private void jmConsultaAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmConsultaAltActionPerformed
+        Consulta consulta = new Consulta();
+        jDesktopPane2.add(consulta);
+        consulta.setVisible(true);
+        consulta.selecionado(opcao.ALTERAR);    }//GEN-LAST:event_jmConsultaAltActionPerformed
+
+    private void jmMedicoExcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmMedicoExcActionPerformed
+        Medico medico = new Medico();
+        jDesktopPane2.add(medico);
+        medico.setVisible(true);
+        medico.selecionado(opcao.EXCLUIR);    }//GEN-LAST:event_jmMedicoExcActionPerformed
+
+    private void jmPacienteExcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPacienteExcActionPerformed
+        Paciente paciente = new Paciente();
+        jDesktopPane2.add(paciente);
+        paciente.setVisible(true);
+        paciente.selecionado(opcao.EXCLUIR);    }//GEN-LAST:event_jmPacienteExcActionPerformed
+
+    private void jmConsultaExcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmConsultaExcActionPerformed
+        Consulta consulta = new Consulta();
+        jDesktopPane2.add(consulta);
+        consulta.setVisible(true);
+        consulta.selecionado(opcao.EXCLUIR);    }//GEN-LAST:event_jmConsultaExcActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,24 +341,22 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JMenu jmCadastrar;
+    private javax.swing.JMenuItem jmConsultaAlt;
+    private javax.swing.JMenuItem jmConsultaCad;
+    private javax.swing.JMenuItem jmConsultaCons;
+    private javax.swing.JMenuItem jmConsultaExc;
+    private javax.swing.JMenuItem jmMedicoAlt;
+    private javax.swing.JMenuItem jmMedicoCad;
+    private javax.swing.JMenuItem jmMedicoCons;
+    private javax.swing.JMenuItem jmMedicoExc;
+    private javax.swing.JMenuItem jmPacienteAlt;
+    private javax.swing.JMenuItem jmPacienteCad;
+    private javax.swing.JMenuItem jmPacienteCons;
+    private javax.swing.JMenuItem jmPacienteExc;
     // End of variables declaration//GEN-END:variables
 }

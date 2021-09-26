@@ -5,6 +5,17 @@
  */
 package view;
 
+import Dao.MedicoDao;
+import Dao.PacienteDao;
+import java.awt.Component;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import model.ConsultaModel;
+import model.MedicoModel;
+import model.Opcao;
+import model.PacienteModel;
+
 /**
  *
  * @author Wanderson
@@ -14,8 +25,19 @@ public class Consulta extends javax.swing.JInternalFrame {
     /**
      * Creates new form Consulta
      */
+    Opcao opcao;
+    ArrayList<MedicoModel> medicos;
+    ArrayList<PacienteModel> pacientes;
+    ArrayList<ConsultaModel> consultas;
+    MedicoDao medicoDao;
+    PacienteDao pacienteDao;
+
     public Consulta() {
         initComponents();
+        jTabbedPane1.setEnabled(false);
+        medicoDao = new MedicoDao();
+        pacienteDao = new PacienteDao();
+
     }
 
     /**
@@ -28,83 +50,646 @@ public class Consulta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        cadastrar = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jlMedicoCad = new javax.swing.JLabel();
+        jlPacienteCad = new javax.swing.JLabel();
+        cbxMedicoCad = new javax.swing.JComboBox<>();
+        cbxPacienteCad = new javax.swing.JComboBox<>();
+        jPanel5 = new javax.swing.JPanel();
+        jlDataCad = new javax.swing.JLabel();
+        jsDiaCad = new javax.swing.JSpinner();
+        jsMesCad = new javax.swing.JSpinner();
+        jsAnoCad = new javax.swing.JSpinner();
+        jlHoraCad = new javax.swing.JLabel();
+        jsHoraCad = new javax.swing.JSpinner();
+        jsMinutoCad = new javax.swing.JSpinner();
+        btnDataAtualCad = new javax.swing.JButton();
+        btnHoraAtualCad = new javax.swing.JButton();
+        btnSalvarCad = new javax.swing.JButton();
+        btnFecharCad = new javax.swing.JButton();
+        consultar = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jlDataCad3 = new javax.swing.JLabel();
+        jlHoraCad3 = new javax.swing.JLabel();
+        jlMedicoCons = new javax.swing.JLabel();
+        jlPacienteCons = new javax.swing.JLabel();
+        tfMedicoCons = new javax.swing.JTextField();
+        tfPacienteCons = new javax.swing.JTextField();
+        tfDataCons = new javax.swing.JTextField();
+        tfHoraCons = new javax.swing.JTextField();
+        cbxConsultaCons = new javax.swing.JComboBox<>();
+        btnFecharCons = new javax.swing.JButton();
+        alterar = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jlDataCad4 = new javax.swing.JLabel();
+        jsDiaCad4 = new javax.swing.JSpinner();
+        jsMesCad4 = new javax.swing.JSpinner();
+        jsAnoCad4 = new javax.swing.JSpinner();
+        jlHoraCad4 = new javax.swing.JLabel();
+        jsHoraCad4 = new javax.swing.JSpinner();
+        jsMinutoCad4 = new javax.swing.JSpinner();
+        btnDataAtualCad4 = new javax.swing.JButton();
+        btnHoraAtualCad4 = new javax.swing.JButton();
+        jlMedicoCons1 = new javax.swing.JLabel();
+        jlPacienteCons1 = new javax.swing.JLabel();
+        tfMedicoCons1 = new javax.swing.JTextField();
+        tfPacienteCons1 = new javax.swing.JTextField();
+        cbxConsultaAlt = new javax.swing.JComboBox<>();
+        btnAtualizar = new javax.swing.JButton();
+        btnFecharCons5 = new javax.swing.JButton();
+        excluir = new javax.swing.JPanel();
+        btnFecharCons2 = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jlDataCad5 = new javax.swing.JLabel();
+        jlHoraCad5 = new javax.swing.JLabel();
+        jlMedicoCons2 = new javax.swing.JLabel();
+        jlPacienteCons2 = new javax.swing.JLabel();
+        tfMedicoCons2 = new javax.swing.JTextField();
+        tfPacienteCons2 = new javax.swing.JTextField();
+        tfHoraExc = new javax.swing.JTextField();
+        tfDataExc = new javax.swing.JTextField();
+        cbxConsultaExc = new javax.swing.JComboBox<>();
+        btnExcluir = new javax.swing.JButton();
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+        jTabbedPane1.setDoubleBuffered(true);
+
+        cadastrar.setEnabled(false);
+
+        jLabel1.setText("Selecione");
+
+        jlMedicoCad.setText("Médico");
+
+        jlPacienteCad.setText("Paciente");
+
+        jlDataCad.setText("Data");
+
+        jlHoraCad.setText("Hora");
+
+        btnDataAtualCad.setText("Data atual");
+
+        btnHoraAtualCad.setText("Hora atual");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jlHoraCad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jsHoraCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jsMinutoCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jlDataCad)
+                        .addGap(18, 18, 18)
+                        .addComponent(jsDiaCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jsMesCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jsAnoCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDataAtualCad)
+                    .addComponent(btnHoraAtualCad))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlDataCad)
+                    .addComponent(jsDiaCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsMesCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsAnoCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDataAtualCad))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlHoraCad)
+                    .addComponent(jsHoraCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsMinutoCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHoraAtualCad))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cadastrar", jPanel1);
+        btnSalvarCad.setText("Salvar");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+        btnFecharCad.setText("Fechar");
+
+        javax.swing.GroupLayout cadastrarLayout = new javax.swing.GroupLayout(cadastrar);
+        cadastrar.setLayout(cadastrarLayout);
+        cadastrarLayout.setHorizontalGroup(
+            cadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(cadastrarLayout.createSequentialGroup()
+                .addGroup(cadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cadastrarLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(jlMedicoCad)
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cbxMedicoCad, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)))
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(cadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlPacienteCad)
+                    .addComponent(cbxPacienteCad, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(cadastrarLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(btnSalvarCad)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnFecharCad)
+                .addGap(94, 94, 94))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
+        cadastrarLayout.setVerticalGroup(
+            cadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadastrarLayout.createSequentialGroup()
+                .addGroup(cadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(cadastrarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(cadastrarLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(cadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlMedicoCad)
+                            .addComponent(jlPacienteCad))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(cadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxMedicoCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxPacienteCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGroup(cadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvarCad)
+                    .addComponent(btnFecharCad))
+                .addGap(14, 14, 14))
         );
 
-        jTabbedPane1.addTab("Consultar", jPanel2);
+        jTabbedPane1.addTab("Cadastrar", cadastrar);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+        consultar.setEnabled(false);
+
+        jlDataCad3.setText("Data");
+
+        jlHoraCad3.setText("Hora");
+
+        jlMedicoCons.setText("Médico");
+
+        jlPacienteCons.setText("Paciente");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jlMedicoCons)
+                        .addGap(17, 17, 17)
+                        .addComponent(tfMedicoCons, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jlPacienteCons))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jlDataCad3))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jlHoraCad3)))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfHoraCons, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfDataCons, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfPacienteCons, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(6, 6, 6))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jlMedicoCons))
+                    .addComponent(tfMedicoCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jlPacienteCons))
+                    .addComponent(tfPacienteCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jlDataCad3))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfDataCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlHoraCad3)
+                    .addComponent(tfHoraCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3))
         );
 
-        jTabbedPane1.addTab("Alterar", jPanel3);
+        btnFecharCons.setText("Fechar");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+        javax.swing.GroupLayout consultarLayout = new javax.swing.GroupLayout(consultar);
+        consultar.setLayout(consultarLayout);
+        consultarLayout.setHorizontalGroup(
+            consultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(consultarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(consultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(consultarLayout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(consultarLayout.createSequentialGroup()
+                        .addComponent(btnFecharCons)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(consultarLayout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addComponent(cbxConsultaCons, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
+        consultarLayout.setVerticalGroup(
+            consultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, consultarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxConsultaCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnFecharCons)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Excluir", jPanel4);
+        jTabbedPane1.addTab("Consultar", consultar);
+
+        alterar.setEnabled(false);
+
+        jlDataCad4.setText("Data");
+
+        jlHoraCad4.setText("Hora");
+
+        btnDataAtualCad4.setText("Data atual");
+
+        btnHoraAtualCad4.setText("Hora atual");
+
+        jlMedicoCons1.setText("Médico");
+
+        jlPacienteCons1.setText("Paciente");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jlHoraCad4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jsHoraCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jsMinutoCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addComponent(jlDataCad4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jsDiaCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jsMesCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jsAnoCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDataAtualCad4)
+                            .addComponent(btnHoraAtualCad4)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jlPacienteCons1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfPacienteCons1))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jlMedicoCons1)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfMedicoCons1)))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlMedicoCons1)
+                    .addComponent(tfMedicoCons1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlPacienteCons1)
+                    .addComponent(tfPacienteCons1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlDataCad4)
+                    .addComponent(jsDiaCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsMesCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsAnoCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDataAtualCad4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlHoraCad4)
+                    .addComponent(jsHoraCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsMinutoCad4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHoraAtualCad4))
+                .addContainerGap())
+        );
+
+        btnAtualizar.setText("Atualizar");
+
+        btnFecharCons5.setText("Fechar");
+
+        javax.swing.GroupLayout alterarLayout = new javax.swing.GroupLayout(alterar);
+        alterar.setLayout(alterarLayout);
+        alterarLayout.setHorizontalGroup(
+            alterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(alterarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, alterarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnFecharCons5)
+                .addGap(85, 85, 85)
+                .addComponent(btnAtualizar)
+                .addGap(77, 77, 77))
+            .addGroup(alterarLayout.createSequentialGroup()
+                .addGap(142, 142, 142)
+                .addComponent(cbxConsultaAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        alterarLayout.setVerticalGroup(
+            alterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, alterarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxConsultaAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(alterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFecharCons5)
+                    .addComponent(btnAtualizar))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Alterar", alterar);
+
+        excluir.setEnabled(false);
+
+        btnFecharCons2.setText("Fechar");
+
+        jlDataCad5.setText("Data");
+
+        jlHoraCad5.setText("Hora");
+
+        jlMedicoCons2.setText("Médico");
+
+        jlPacienteCons2.setText("Paciente");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlHoraCad5)
+                            .addComponent(jlDataCad5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfDataExc, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfHoraExc, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(187, 187, 187))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jlPacienteCons2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfPacienteCons2))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jlMedicoCons2)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfMedicoCons2)))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlMedicoCons2)
+                    .addComponent(tfMedicoCons2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfPacienteCons2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlPacienteCons2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfDataExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlDataCad5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfHoraExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlHoraCad5))
+                .addContainerGap())
+        );
+
+        btnExcluir.setText("Excluir");
+
+        javax.swing.GroupLayout excluirLayout = new javax.swing.GroupLayout(excluir);
+        excluir.setLayout(excluirLayout);
+        excluirLayout.setHorizontalGroup(
+            excluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(excluirLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(excluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(excluirLayout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(excluirLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(btnFecharCons2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExcluir)
+                        .addGap(82, 82, 82))))
+            .addGroup(excluirLayout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(cbxConsultaExc, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        excluirLayout.setVerticalGroup(
+            excluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, excluirLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxConsultaExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(excluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFecharCons2)
+                    .addComponent(btnExcluir))
+                .addGap(18, 18, 18))
+        );
+
+        jTabbedPane1.addTab("Excluir", excluir);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void selecionado(Opcao op) {
+        if (op == opcao.CADASTRAR) {
+            jTabbedPane1.setSelectedIndex(0);
+            medicos = medicoDao.listar();
+            pacientes = pacienteDao.listar();
+        }
+        if (op == opcao.CONSULTAR) {
+            jTabbedPane1.setSelectedIndex(1);
+        }
+        if (op == opcao.ALTERAR) {
+            jTabbedPane1.setSelectedIndex(2);
+        }
+        if (op == opcao.EXCLUIR) {
+            jTabbedPane1.setSelectedIndex(3);
+        }
+    }
+
+    public void limparCampos(JPanel jpanel) {
+        Component[] com = jpanel.getComponents();
+        for (Component component : com) {
+            if (component instanceof JTextField) {
+                JTextField tf = (JTextField) component;
+                tf.setText("");
+
+            }
+        }
+
+    }
+
+    public void habilitarCampos(JPanel jpanel, boolean habilita) {
+        Component[] com = jpanel.getComponents();
+        for (Component component : com) {
+            if (component instanceof JTextField) {
+                JTextField tf = (JTextField) component;
+                tf.setEnabled(habilita);
+
+            }
+        }
+
+    }
+
+    public int VerificaCampos(JPanel jpanel) {
+        Component[] com = jpanel.getComponents();
+        int cont = 0;
+        for (Component component : com) {
+            if (component instanceof JTextField) {
+                JTextField tf = (JTextField) component;
+                if (!tf.getText().equals("")) {
+                    cont += 1;
+                }
+            }
+        }
+        return cont;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel alterar;
+    private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnDataAtualCad;
+    private javax.swing.JButton btnDataAtualCad4;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnFecharCad;
+    private javax.swing.JButton btnFecharCons;
+    private javax.swing.JButton btnFecharCons2;
+    private javax.swing.JButton btnFecharCons5;
+    private javax.swing.JButton btnHoraAtualCad;
+    private javax.swing.JButton btnHoraAtualCad4;
+    private javax.swing.JButton btnSalvarCad;
+    private javax.swing.JPanel cadastrar;
+    private javax.swing.JComboBox<String> cbxConsultaAlt;
+    private javax.swing.JComboBox<String> cbxConsultaCons;
+    private javax.swing.JComboBox<String> cbxConsultaExc;
+    private javax.swing.JComboBox<String> cbxMedicoCad;
+    private javax.swing.JComboBox<String> cbxPacienteCad;
+    private javax.swing.JPanel consultar;
+    private javax.swing.JPanel excluir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel jlDataCad;
+    private javax.swing.JLabel jlDataCad3;
+    private javax.swing.JLabel jlDataCad4;
+    private javax.swing.JLabel jlDataCad5;
+    private javax.swing.JLabel jlHoraCad;
+    private javax.swing.JLabel jlHoraCad3;
+    private javax.swing.JLabel jlHoraCad4;
+    private javax.swing.JLabel jlHoraCad5;
+    private javax.swing.JLabel jlMedicoCad;
+    private javax.swing.JLabel jlMedicoCons;
+    private javax.swing.JLabel jlMedicoCons1;
+    private javax.swing.JLabel jlMedicoCons2;
+    private javax.swing.JLabel jlPacienteCad;
+    private javax.swing.JLabel jlPacienteCons;
+    private javax.swing.JLabel jlPacienteCons1;
+    private javax.swing.JLabel jlPacienteCons2;
+    private javax.swing.JSpinner jsAnoCad;
+    private javax.swing.JSpinner jsAnoCad4;
+    private javax.swing.JSpinner jsDiaCad;
+    private javax.swing.JSpinner jsDiaCad4;
+    private javax.swing.JSpinner jsHoraCad;
+    private javax.swing.JSpinner jsHoraCad4;
+    private javax.swing.JSpinner jsMesCad;
+    private javax.swing.JSpinner jsMesCad4;
+    private javax.swing.JSpinner jsMinutoCad;
+    private javax.swing.JSpinner jsMinutoCad4;
+    private javax.swing.JTextField tfDataCons;
+    private javax.swing.JTextField tfDataExc;
+    private javax.swing.JTextField tfHoraCons;
+    private javax.swing.JTextField tfHoraExc;
+    private javax.swing.JTextField tfMedicoCons;
+    private javax.swing.JTextField tfMedicoCons1;
+    private javax.swing.JTextField tfMedicoCons2;
+    private javax.swing.JTextField tfPacienteCons;
+    private javax.swing.JTextField tfPacienteCons1;
+    private javax.swing.JTextField tfPacienteCons2;
     // End of variables declaration//GEN-END:variables
 }

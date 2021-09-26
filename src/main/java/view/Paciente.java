@@ -5,6 +5,17 @@
  */
 package view;
 
+import Dao.PacienteDao;
+import java.awt.Component;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import model.MedicoModel;
+import model.Opcao;
+import model.PacienteModel;
+
 /**
  *
  * @author Wanderson
@@ -14,8 +25,15 @@ public class Paciente extends javax.swing.JInternalFrame {
     /**
      * Creates new form Paciente
      */
+    Opcao opcao;
+    PacienteDao pacienteDao;
+    ArrayList<PacienteModel> pacientes;
+
     public Paciente() {
         initComponents();
+        jTabbedPane1.setEnabled(false);
+        pacienteDao = new PacienteDao();
+
     }
 
     /**
@@ -52,7 +70,6 @@ public class Paciente extends javax.swing.JInternalFrame {
         tfEnderecoCons = new javax.swing.JTextField();
         btnFecharCons = new javax.swing.JButton();
         cbxNomeCons = new javax.swing.JComboBox<>();
-        jlSelecioneCons = new javax.swing.JLabel();
         jpAlterar = new javax.swing.JPanel();
         jpCamposAlt = new javax.swing.JPanel();
         jlCpfAlt = new javax.swing.JLabel();
@@ -65,10 +82,7 @@ public class Paciente extends javax.swing.JInternalFrame {
         tfEnderecoAlt = new javax.swing.JTextField();
         btnSalvarAlt = new javax.swing.JButton();
         btnFecharAlt = new javax.swing.JButton();
-        cbxNomeCons2 = new javax.swing.JComboBox<>();
-        jlSelecioneCons2 = new javax.swing.JLabel();
         cbxNomeAlt = new javax.swing.JComboBox<>();
-        jlSelecioneAlt = new javax.swing.JLabel();
         jpExcluir = new javax.swing.JPanel();
         jpCamposExc = new javax.swing.JPanel();
         jlCpfExc = new javax.swing.JLabel();
@@ -79,12 +93,14 @@ public class Paciente extends javax.swing.JInternalFrame {
         jlEnderecoExc = new javax.swing.JLabel();
         tfNomeExc = new javax.swing.JTextField();
         tfEnderecoExc = new javax.swing.JTextField();
-        btnSalvarExc = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         btnFecharExc = new javax.swing.JButton();
-        cbxNomeCons3 = new javax.swing.JComboBox<>();
-        jlSelecioneCons3 = new javax.swing.JLabel();
         cbxNomeExc = new javax.swing.JComboBox<>();
-        jlSelecioneExc = new javax.swing.JLabel();
+
+        setDoubleBuffered(true);
+
+        jpCadastrar.setDoubleBuffered(false);
+        jpCadastrar.setEnabled(false);
 
         jlCpfCad.setText("CPF");
 
@@ -153,8 +169,18 @@ public class Paciente extends javax.swing.JInternalFrame {
         );
 
         btnSalvarCad.setText("Salvar");
+        btnSalvarCad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarCadActionPerformed(evt);
+            }
+        });
 
         btnFecharCad.setText("Fechar");
+        btnFecharCad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharCadActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpCadastrarLayout = new javax.swing.GroupLayout(jpCadastrar);
         jpCadastrar.setLayout(jpCadastrarLayout);
@@ -214,14 +240,14 @@ public class Paciente extends javax.swing.JInternalFrame {
                             .addComponent(jlCpfCons)
                             .addComponent(jlNomeCons))
                         .addGap(22, 22, 22)
-                        .addGroup(jpCamposConsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jpCamposConsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpCamposConsLayout.createSequentialGroup()
                                 .addComponent(tfCpfCons, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
+                                .addGap(30, 30, 30)
                                 .addComponent(jlTelefoneCons)
-                                .addGap(35, 35, 35)
-                                .addComponent(tfTelefoneCons, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfNomeCons)))
+                                .addGap(30, 30, 30)
+                                .addComponent(tfTelefoneCons, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfNomeCons, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpCamposConsLayout.createSequentialGroup()
                         .addComponent(jlEnderecoCons)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -249,8 +275,17 @@ public class Paciente extends javax.swing.JInternalFrame {
         );
 
         btnFecharCons.setText("Fechar");
+        btnFecharCons.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharConsActionPerformed(evt);
+            }
+        });
 
-        jlSelecioneCons.setText("Selecione");
+        cbxNomeCons.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxNomeConsItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpConsultarLayout = new javax.swing.GroupLayout(jpConsultar);
         jpConsultar.setLayout(jpConsultarLayout);
@@ -264,18 +299,14 @@ public class Paciente extends javax.swing.JInternalFrame {
                         .addComponent(btnFecharCons)
                         .addGap(143, 143, 143))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultarLayout.createSequentialGroup()
-                        .addComponent(jlSelecioneCons)
-                        .addGap(30, 30, 30)
-                        .addComponent(cbxNomeCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(144, 144, 144))))
+                        .addComponent(cbxNomeCons, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(134, 134, 134))))
         );
         jpConsultarLayout.setVerticalGroup(
             jpConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpConsultarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpConsultarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxNomeCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlSelecioneCons))
+                .addComponent(cbxNomeCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(jpCamposCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,11 +351,11 @@ public class Paciente extends javax.swing.JInternalFrame {
                         .addGroup(jpCamposAltLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jpCamposAltLayout.createSequentialGroup()
                                 .addComponent(tfCpfAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
+                                .addGap(30, 30, 30)
                                 .addComponent(jlTelefoneAlt)
-                                .addGap(35, 35, 35)
-                                .addComponent(tfTelefoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfNomeAlt)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfTelefoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpCamposAltLayout.createSequentialGroup()
                         .addComponent(jlEnderecoAlt)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -352,12 +383,24 @@ public class Paciente extends javax.swing.JInternalFrame {
         );
 
         btnSalvarAlt.setText("Salvar");
+        btnSalvarAlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarAltActionPerformed(evt);
+            }
+        });
 
         btnFecharAlt.setText("Fechar");
+        btnFecharAlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharAltActionPerformed(evt);
+            }
+        });
 
-        jlSelecioneCons2.setText("Selecione");
-
-        jlSelecioneAlt.setText("Selecione");
+        cbxNomeAlt.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxNomeAltItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpAlterarLayout = new javax.swing.GroupLayout(jpAlterar);
         jpAlterar.setLayout(jpAlterarLayout);
@@ -365,33 +408,21 @@ public class Paciente extends javax.swing.JInternalFrame {
             jpAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpCamposAlt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jpAlterarLayout.createSequentialGroup()
-                .addGroup(jpAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpAlterarLayout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addComponent(btnSalvarAlt)
-                        .addGap(94, 94, 94)
-                        .addComponent(btnFecharAlt))
-                    .addGroup(jpAlterarLayout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addComponent(jlSelecioneAlt)
-                        .addGap(30, 30, 30)
-                        .addComponent(cbxNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(101, 101, 101)
+                .addComponent(btnSalvarAlt)
+                .addGap(94, 94, 94)
+                .addComponent(btnFecharAlt)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jpAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jpAlterarLayout.createSequentialGroup()
-                    .addGap(125, 125, 125)
-                    .addComponent(jlSelecioneCons2)
-                    .addGap(30, 30, 30)
-                    .addComponent(cbxNomeCons2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(126, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAlterarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(148, 148, 148))
         );
         jpAlterarLayout.setVerticalGroup(
             jpAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAlterarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlSelecioneAlt))
+                .addComponent(cbxNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(jpCamposAlt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -399,13 +430,6 @@ public class Paciente extends javax.swing.JInternalFrame {
                     .addComponent(btnFecharAlt)
                     .addComponent(btnSalvarAlt))
                 .addContainerGap(66, Short.MAX_VALUE))
-            .addGroup(jpAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jpAlterarLayout.createSequentialGroup()
-                    .addGap(130, 130, 130)
-                    .addGroup(jpAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxNomeCons2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jlSelecioneCons2))
-                    .addContainerGap(131, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Alterar", jpAlterar);
@@ -442,19 +466,19 @@ public class Paciente extends javax.swing.JInternalFrame {
                             .addComponent(jlCpfExc)
                             .addComponent(jlNomeExc))
                         .addGap(22, 22, 22)
-                        .addGroup(jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpCamposExcLayout.createSequentialGroup()
                                 .addComponent(tfCpfExc, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
+                                .addGap(32, 32, 32)
                                 .addComponent(jlTelefoneExc)
-                                .addGap(35, 35, 35)
-                                .addComponent(tfTelefoneExc, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(tfNomeExc)))
+                                .addGap(28, 28, 28)
+                                .addComponent(tfTelefoneExc, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tfNomeExc, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpCamposExcLayout.createSequentialGroup()
                         .addComponent(jlEnderecoExc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tfEnderecoExc)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jpCamposExcLayout.setVerticalGroup(
             jpCamposExcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,13 +500,25 @@ public class Paciente extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnSalvarExc.setText("Salvar");
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnFecharExc.setText("Fechar");
+        btnFecharExc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharExcActionPerformed(evt);
+            }
+        });
 
-        jlSelecioneCons3.setText("Selecione");
-
-        jlSelecioneExc.setText("Selecione");
+        cbxNomeExc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxNomeExcItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpExcluirLayout = new javax.swing.GroupLayout(jpExcluir);
         jpExcluir.setLayout(jpExcluirLayout);
@@ -490,47 +526,28 @@ public class Paciente extends javax.swing.JInternalFrame {
             jpExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpCamposExc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jpExcluirLayout.createSequentialGroup()
-                .addGroup(jpExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpExcluirLayout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addComponent(btnSalvarExc)
-                        .addGap(94, 94, 94)
-                        .addComponent(btnFecharExc))
-                    .addGroup(jpExcluirLayout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addComponent(jlSelecioneExc)
-                        .addGap(30, 30, 30)
-                        .addComponent(cbxNomeExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(101, 101, 101)
+                .addComponent(btnExcluir)
+                .addGap(94, 94, 94)
+                .addComponent(btnFecharExc)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jpExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jpExcluirLayout.createSequentialGroup()
-                    .addGap(125, 125, 125)
-                    .addComponent(jlSelecioneCons3)
-                    .addGap(30, 30, 30)
-                    .addComponent(cbxNomeCons3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(126, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpExcluirLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxNomeExc, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(139, 139, 139))
         );
         jpExcluirLayout.setVerticalGroup(
             jpExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpExcluirLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxNomeExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlSelecioneExc))
+                .addComponent(cbxNomeExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(jpCamposExc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFecharExc)
-                    .addComponent(btnSalvarExc))
+                    .addComponent(btnExcluir))
                 .addContainerGap(66, Short.MAX_VALUE))
-            .addGroup(jpExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jpExcluirLayout.createSequentialGroup()
-                    .addGap(130, 130, 130)
-                    .addGroup(jpExcluirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbxNomeCons3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jlSelecioneCons3))
-                    .addContainerGap(131, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Excluir", jpExcluir);
@@ -539,120 +556,208 @@ public class Paciente extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadActionPerformed
+        int quat = VerificaCampos(jpCamposCad);
+        if (quat == 4) {
+            PacienteModel paciente = new PacienteModel(tfCpfCad.getText(), tfNomeCad.getText(),
+                    tfEnderecoCad.getText(), tfTelefoneCad.getText());
+            int ret = pacienteDao.cadastrar(paciente);
+            if (ret == 1) {
+                JOptionPane.showConfirmDialog(this, "Dados cadastrados !", "Cadastrado com sucesso", JOptionPane.DEFAULT_OPTION);
+                if (JOptionPane.DEFAULT_OPTION == -1) {
+                    dispose();
+                }
+            }
 
+        } else {
+            JOptionPane.showMessageDialog(jpCamposCad, "Preencha todos os campos !");
+        }
+
+
+    }//GEN-LAST:event_btnSalvarCadActionPerformed
+
+    private void cbxNomeConsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNomeConsItemStateChanged
+        tfCpfCons.setText(pacientes.get(cbxNomeCons.getSelectedIndex()).getCpf());
+        tfNomeCons.setText(pacientes.get(cbxNomeCons.getSelectedIndex()).getNome());
+        tfEnderecoCons.setText(pacientes.get(cbxNomeCons.getSelectedIndex()).getEndereco());
+        tfTelefoneCons.setText(pacientes.get(cbxNomeCons.getSelectedIndex()).getTelefone());
+
+    }//GEN-LAST:event_cbxNomeConsItemStateChanged
+
+    private void cbxNomeAltItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNomeAltItemStateChanged
+        tfCpfAlt.setText(pacientes.get(cbxNomeAlt.getSelectedIndex()).getCpf());
+        tfNomeAlt.setText(pacientes.get(cbxNomeAlt.getSelectedIndex()).getNome());
+        tfEnderecoAlt.setText(pacientes.get(cbxNomeAlt.getSelectedIndex()).getEndereco());
+        tfTelefoneAlt.setText(pacientes.get(cbxNomeAlt.getSelectedIndex()).getTelefone());
+    }//GEN-LAST:event_cbxNomeAltItemStateChanged
+
+    private void cbxNomeExcItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNomeExcItemStateChanged
+        tfCpfExc.setText(pacientes.get(cbxNomeExc.getSelectedIndex()).getCpf());
+        tfNomeExc.setText(pacientes.get(cbxNomeExc.getSelectedIndex()).getNome());
+        tfEnderecoExc.setText(pacientes.get(cbxNomeExc.getSelectedIndex()).getEndereco());
+        tfTelefoneExc.setText(pacientes.get(cbxNomeExc.getSelectedIndex()).getTelefone());    }//GEN-LAST:event_cbxNomeExcItemStateChanged
+
+    private void btnFecharConsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharConsActionPerformed
+        fechar();
+    }//GEN-LAST:event_btnFecharConsActionPerformed
+
+    private void btnFecharAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharAltActionPerformed
+        fechar();
+    }//GEN-LAST:event_btnFecharAltActionPerformed
+
+    private void btnFecharExcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharExcActionPerformed
+        fechar();
+    }//GEN-LAST:event_btnFecharExcActionPerformed
+
+    private void btnFecharCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharCadActionPerformed
+        fechar();
+    }//GEN-LAST:event_btnFecharCadActionPerformed
+
+    private void btnSalvarAltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAltActionPerformed
+        PacienteModel paciente = pacientes.get(cbxNomeAlt.getSelectedIndex());
+        paciente.setCpf(tfCpfAlt.getText());
+        paciente.setNome(tfNomeAlt.getText());
+        paciente.setEndereco(tfEnderecoAlt.getText());
+        paciente.setTelefone(tfTelefoneAlt.getText());
+        int ret = pacienteDao.alterar(paciente);
+        if (ret == 1) {
+            JOptionPane.showConfirmDialog(this, "Alterado !", "Alterado com sucesso", JOptionPane.DEFAULT_OPTION);
+            if (JOptionPane.DEFAULT_OPTION == -1) {
+                dispose();
+            }
+        }
+
+
+    }//GEN-LAST:event_btnSalvarAltActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int op = JOptionPane.showInternalConfirmDialog(this, "Quer mesmo Excluir ?", "Excluir",
+                JOptionPane.YES_NO_OPTION);
+        if (op == JOptionPane.YES_OPTION) {
+            PacienteModel paciente = pacientes.get(cbxNomeExc.getSelectedIndex());
+            int ret = pacienteDao.excluir(paciente);
+            if (ret == 1) {
+                JOptionPane.showConfirmDialog(this, "Excluido !", "Excluido com sucesso", JOptionPane.DEFAULT_OPTION);
+                if (JOptionPane.DEFAULT_OPTION == -1) {
+                    dispose();
+                }
+            }
+            dispose();
+        }    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    public void selecionado(Opcao op) {
+        if (op == opcao.CADASTRAR) {
+            jTabbedPane1.setSelectedIndex(0);
+        }
+        if (op == opcao.CONSULTAR) {
+            jTabbedPane1.setSelectedIndex(1);
+            pacientes = pacienteDao.listar();
+            carregaCampos(cbxNomeCons);
+
+        }
+        if (op == opcao.ALTERAR) {
+            jTabbedPane1.setSelectedIndex(2);
+            pacientes = pacienteDao.listar();
+            carregaCampos(cbxNomeAlt);
+
+        }
+        if (op == opcao.EXCLUIR) {
+            jTabbedPane1.setSelectedIndex(3);
+            pacientes = pacienteDao.listar();
+            carregaCampos(cbxNomeExc);
+
+        }
+    }
+
+    public void limparCampos(JPanel jpanel) {
+        Component[] com = jpanel.getComponents();
+        for (Component component : com) {
+            if (component instanceof JTextField) {
+                JTextField tf = (JTextField) component;
+                tf.setText("");
+
+            }
+        }
+
+    }
+
+    public void habilitarCampos(JPanel jpanel, boolean habilita) {
+        Component[] com = jpanel.getComponents();
+        for (Component component : com) {
+            if (component instanceof JTextField) {
+                JTextField tf = (JTextField) component;
+                tf.setEnabled(habilita);
+
+            }
+        }
+
+    }
+
+    public int VerificaCampos(JPanel jpanel) {
+        Component[] com = jpanel.getComponents();
+        int cont = 0;
+        for (Component component : com) {
+            if (component instanceof JTextField) {
+                JTextField tf = (JTextField) component;
+                if (!tf.getText().equals("")) {
+                    cont += 1;
+                }
+            }
+        }
+        return cont;
+    }
+
+    public void fechar() {
+        int op = JOptionPane.showInternalConfirmDialog(this, "Quer mesmo Fechar ?", "Fechar",
+                JOptionPane.YES_NO_OPTION);
+        if (op == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+    }
+
+    public void carregaCampos(JComboBox cbx) {
+
+        for (PacienteModel paciente : pacientes) {
+            cbx.addItem(paciente.getNome());
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFecharAlt;
     private javax.swing.JButton btnFecharCad;
     private javax.swing.JButton btnFecharCons;
     private javax.swing.JButton btnFecharExc;
     private javax.swing.JButton btnSalvarAlt;
     private javax.swing.JButton btnSalvarCad;
-    private javax.swing.JButton btnSalvarExc;
     private javax.swing.JComboBox<String> cbxNomeAlt;
     private javax.swing.JComboBox<String> cbxNomeCons;
-    private javax.swing.JComboBox<String> cbxNomeCons2;
-    private javax.swing.JComboBox<String> cbxNomeCons3;
     private javax.swing.JComboBox<String> cbxNomeExc;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel jlCpfAlt;
     private javax.swing.JLabel jlCpfCad;
-    private javax.swing.JLabel jlCpfCad1;
-    private javax.swing.JLabel jlCpfCad10;
-    private javax.swing.JLabel jlCpfCad11;
-    private javax.swing.JLabel jlCpfCad12;
-    private javax.swing.JLabel jlCpfCad13;
-    private javax.swing.JLabel jlCpfCad14;
-    private javax.swing.JLabel jlCpfCad2;
-    private javax.swing.JLabel jlCpfCad3;
-    private javax.swing.JLabel jlCpfCad4;
-    private javax.swing.JLabel jlCpfCad5;
-    private javax.swing.JLabel jlCpfCad6;
-    private javax.swing.JLabel jlCpfCad7;
-    private javax.swing.JLabel jlCpfCad8;
-    private javax.swing.JLabel jlCpfCad9;
     private javax.swing.JLabel jlCpfCons;
     private javax.swing.JLabel jlCpfExc;
     private javax.swing.JLabel jlEnderecoAlt;
     private javax.swing.JLabel jlEnderecoCad;
-    private javax.swing.JLabel jlEnderecoCad1;
-    private javax.swing.JLabel jlEnderecoCad10;
-    private javax.swing.JLabel jlEnderecoCad11;
-    private javax.swing.JLabel jlEnderecoCad12;
-    private javax.swing.JLabel jlEnderecoCad13;
-    private javax.swing.JLabel jlEnderecoCad14;
-    private javax.swing.JLabel jlEnderecoCad2;
-    private javax.swing.JLabel jlEnderecoCad3;
-    private javax.swing.JLabel jlEnderecoCad4;
-    private javax.swing.JLabel jlEnderecoCad5;
-    private javax.swing.JLabel jlEnderecoCad6;
-    private javax.swing.JLabel jlEnderecoCad7;
-    private javax.swing.JLabel jlEnderecoCad8;
-    private javax.swing.JLabel jlEnderecoCad9;
     private javax.swing.JLabel jlEnderecoCons;
     private javax.swing.JLabel jlEnderecoExc;
     private javax.swing.JLabel jlNomeAlt;
     private javax.swing.JLabel jlNomeCad;
-    private javax.swing.JLabel jlNomeCad1;
-    private javax.swing.JLabel jlNomeCad10;
-    private javax.swing.JLabel jlNomeCad11;
-    private javax.swing.JLabel jlNomeCad12;
-    private javax.swing.JLabel jlNomeCad13;
-    private javax.swing.JLabel jlNomeCad14;
-    private javax.swing.JLabel jlNomeCad2;
-    private javax.swing.JLabel jlNomeCad3;
-    private javax.swing.JLabel jlNomeCad4;
-    private javax.swing.JLabel jlNomeCad5;
-    private javax.swing.JLabel jlNomeCad6;
-    private javax.swing.JLabel jlNomeCad7;
-    private javax.swing.JLabel jlNomeCad8;
-    private javax.swing.JLabel jlNomeCad9;
     private javax.swing.JLabel jlNomeCons;
     private javax.swing.JLabel jlNomeExc;
-    private javax.swing.JLabel jlSelecioneAlt;
-    private javax.swing.JLabel jlSelecioneCons;
-    private javax.swing.JLabel jlSelecioneCons2;
-    private javax.swing.JLabel jlSelecioneCons3;
-    private javax.swing.JLabel jlSelecioneExc;
     private javax.swing.JLabel jlTelefoneAlt;
     private javax.swing.JLabel jlTelefoneCad;
-    private javax.swing.JLabel jlTelefoneCad1;
-    private javax.swing.JLabel jlTelefoneCad10;
-    private javax.swing.JLabel jlTelefoneCad11;
-    private javax.swing.JLabel jlTelefoneCad12;
-    private javax.swing.JLabel jlTelefoneCad13;
-    private javax.swing.JLabel jlTelefoneCad14;
-    private javax.swing.JLabel jlTelefoneCad2;
-    private javax.swing.JLabel jlTelefoneCad3;
-    private javax.swing.JLabel jlTelefoneCad4;
-    private javax.swing.JLabel jlTelefoneCad5;
-    private javax.swing.JLabel jlTelefoneCad6;
-    private javax.swing.JLabel jlTelefoneCad7;
-    private javax.swing.JLabel jlTelefoneCad8;
-    private javax.swing.JLabel jlTelefoneCad9;
     private javax.swing.JLabel jlTelefoneCons;
     private javax.swing.JLabel jlTelefoneExc;
     private javax.swing.JPanel jpAlterar;
@@ -665,74 +770,18 @@ public class Paciente extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jpExcluir;
     private javax.swing.JFormattedTextField tfCpfAlt;
     private javax.swing.JFormattedTextField tfCpfCad;
-    private javax.swing.JFormattedTextField tfCpfCad1;
-    private javax.swing.JFormattedTextField tfCpfCad10;
-    private javax.swing.JFormattedTextField tfCpfCad11;
-    private javax.swing.JFormattedTextField tfCpfCad12;
-    private javax.swing.JFormattedTextField tfCpfCad13;
-    private javax.swing.JFormattedTextField tfCpfCad14;
-    private javax.swing.JFormattedTextField tfCpfCad2;
-    private javax.swing.JFormattedTextField tfCpfCad3;
-    private javax.swing.JFormattedTextField tfCpfCad4;
-    private javax.swing.JFormattedTextField tfCpfCad5;
-    private javax.swing.JFormattedTextField tfCpfCad6;
-    private javax.swing.JFormattedTextField tfCpfCad7;
-    private javax.swing.JFormattedTextField tfCpfCad8;
-    private javax.swing.JFormattedTextField tfCpfCad9;
     private javax.swing.JFormattedTextField tfCpfCons;
     private javax.swing.JFormattedTextField tfCpfExc;
     private javax.swing.JTextField tfEnderecoAlt;
     private javax.swing.JTextField tfEnderecoCad;
-    private javax.swing.JTextField tfEnderecoCad1;
-    private javax.swing.JTextField tfEnderecoCad10;
-    private javax.swing.JTextField tfEnderecoCad11;
-    private javax.swing.JTextField tfEnderecoCad12;
-    private javax.swing.JTextField tfEnderecoCad13;
-    private javax.swing.JTextField tfEnderecoCad14;
-    private javax.swing.JTextField tfEnderecoCad2;
-    private javax.swing.JTextField tfEnderecoCad3;
-    private javax.swing.JTextField tfEnderecoCad4;
-    private javax.swing.JTextField tfEnderecoCad5;
-    private javax.swing.JTextField tfEnderecoCad6;
-    private javax.swing.JTextField tfEnderecoCad7;
-    private javax.swing.JTextField tfEnderecoCad8;
-    private javax.swing.JTextField tfEnderecoCad9;
     private javax.swing.JTextField tfEnderecoCons;
     private javax.swing.JTextField tfEnderecoExc;
     private javax.swing.JTextField tfNomeAlt;
     private javax.swing.JTextField tfNomeCad;
-    private javax.swing.JTextField tfNomeCad1;
-    private javax.swing.JTextField tfNomeCad10;
-    private javax.swing.JTextField tfNomeCad11;
-    private javax.swing.JTextField tfNomeCad12;
-    private javax.swing.JTextField tfNomeCad13;
-    private javax.swing.JTextField tfNomeCad14;
-    private javax.swing.JTextField tfNomeCad2;
-    private javax.swing.JTextField tfNomeCad3;
-    private javax.swing.JTextField tfNomeCad4;
-    private javax.swing.JTextField tfNomeCad5;
-    private javax.swing.JTextField tfNomeCad6;
-    private javax.swing.JTextField tfNomeCad7;
-    private javax.swing.JTextField tfNomeCad8;
-    private javax.swing.JTextField tfNomeCad9;
     private javax.swing.JTextField tfNomeCons;
     private javax.swing.JTextField tfNomeExc;
     private javax.swing.JFormattedTextField tfTelefoneAlt;
     private javax.swing.JFormattedTextField tfTelefoneCad;
-    private javax.swing.JFormattedTextField tfTelefoneCad1;
-    private javax.swing.JFormattedTextField tfTelefoneCad10;
-    private javax.swing.JFormattedTextField tfTelefoneCad11;
-    private javax.swing.JFormattedTextField tfTelefoneCad12;
-    private javax.swing.JFormattedTextField tfTelefoneCad13;
-    private javax.swing.JFormattedTextField tfTelefoneCad14;
-    private javax.swing.JFormattedTextField tfTelefoneCad2;
-    private javax.swing.JFormattedTextField tfTelefoneCad3;
-    private javax.swing.JFormattedTextField tfTelefoneCad4;
-    private javax.swing.JFormattedTextField tfTelefoneCad5;
-    private javax.swing.JFormattedTextField tfTelefoneCad6;
-    private javax.swing.JFormattedTextField tfTelefoneCad7;
-    private javax.swing.JFormattedTextField tfTelefoneCad8;
-    private javax.swing.JFormattedTextField tfTelefoneCad9;
     private javax.swing.JFormattedTextField tfTelefoneCons;
     private javax.swing.JFormattedTextField tfTelefoneExc;
     // End of variables declaration//GEN-END:variables
