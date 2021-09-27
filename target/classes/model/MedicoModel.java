@@ -5,8 +5,6 @@
  */
 package model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,17 +16,9 @@ import lombok.Setter;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-
-public class ConsultaModel {
-
-    private MedicoModel medico;
-    private PacienteModel paciente;
-    private LocalDate data;
-    private LocalTime hora;
-    
-    
-    
-
+    @Getter
+    @Setter
+public class MedicoModel {
+    private int crm;
+    private String nome;
 }
