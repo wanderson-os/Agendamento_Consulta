@@ -210,6 +210,7 @@ public class Paciente extends javax.swing.JInternalFrame {
 
         jlCpfCons.setText("CPF");
 
+        tfCpfCons.setEditable(false);
         try {
             tfCpfCons.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
@@ -218,6 +219,7 @@ public class Paciente extends javax.swing.JInternalFrame {
 
         jlTelefoneCons.setText("Telefone");
 
+        tfTelefoneCons.setEditable(false);
         try {
             tfTelefoneCons.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
         } catch (java.text.ParseException ex) {
@@ -227,6 +229,10 @@ public class Paciente extends javax.swing.JInternalFrame {
         jlNomeCons.setText("Nome");
 
         jlEnderecoCons.setText("Endereço");
+
+        tfNomeCons.setEditable(false);
+
+        tfEnderecoCons.setEditable(false);
 
         javax.swing.GroupLayout jpCamposConsLayout = new javax.swing.GroupLayout(jpCamposCons);
         jpCamposCons.setLayout(jpCamposConsLayout);
@@ -436,6 +442,7 @@ public class Paciente extends javax.swing.JInternalFrame {
 
         jlCpfExc.setText("CPF");
 
+        tfCpfExc.setEditable(false);
         try {
             tfCpfExc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
@@ -444,6 +451,7 @@ public class Paciente extends javax.swing.JInternalFrame {
 
         jlTelefoneExc.setText("Telefone");
 
+        tfTelefoneExc.setEditable(false);
         try {
             tfTelefoneExc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
         } catch (java.text.ParseException ex) {
@@ -453,6 +461,10 @@ public class Paciente extends javax.swing.JInternalFrame {
         jlNomeExc.setText("Nome");
 
         jlEnderecoExc.setText("Endereço");
+
+        tfNomeExc.setEditable(false);
+
+        tfEnderecoExc.setEditable(false);
 
         javax.swing.GroupLayout jpCamposExcLayout = new javax.swing.GroupLayout(jpCamposExc);
         jpCamposExc.setLayout(jpCamposExcLayout);

@@ -154,7 +154,11 @@ public class Medico extends javax.swing.JInternalFrame {
 
         jlNomeCons.setText("Nome");
 
+        tfNomeCons.setEditable(false);
+
         jlCrmCons.setText("CRM");
+
+        tfCrmCons.setEditable(false);
 
         btnFecharCons.setText("Fechar");
         btnFecharCons.addActionListener(new java.awt.event.ActionListener() {
@@ -308,7 +312,11 @@ public class Medico extends javax.swing.JInternalFrame {
 
         jlNomeExc.setText("Nome");
 
+        tfNomeExc.setEditable(false);
+
         jlCrmExc.setText("CRM");
+
+        tfCrmExc.setEditable(false);
 
         btnExcluir.setText("Exclui");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
