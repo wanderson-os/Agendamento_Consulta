@@ -82,6 +82,8 @@ public class Medico extends javax.swing.JInternalFrame {
         btnFecharExc = new javax.swing.JButton();
         cbxNomeExc = new javax.swing.JComboBox<>();
 
+        setTitle("Médico");
+
         jlNomeCad.setText("Nome");
 
         jlCrmCad.setText("CRM");

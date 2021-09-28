@@ -9,10 +9,10 @@ import Dao.PacienteDao;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import model.MedicoModel;
 import model.Opcao;
 import model.PacienteModel;
 
@@ -97,6 +97,7 @@ public class Paciente extends javax.swing.JInternalFrame {
         btnFecharExc = new javax.swing.JButton();
         cbxNomeExc = new javax.swing.JComboBox<>();
 
+        setTitle("Paciente");
         setDoubleBuffered(true);
 
         jpCadastrar.setDoubleBuffered(false);
@@ -580,7 +581,7 @@ public class Paciente extends javax.swing.JInternalFrame {
 
     private void btnSalvarCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadActionPerformed
         int quat = VerificaCampos(jpCamposCad);
-        if (quat == 4) {
+        if (quat == 0) {
             PacienteModel paciente = new PacienteModel(tfCpfCad.getText(), tfNomeCad.getText(),
                     tfEnderecoCad.getText(), tfTelefoneCad.getText());
             int ret = pacienteDao.cadastrar(paciente);
@@ -729,14 +730,35 @@ public class Paciente extends javax.swing.JInternalFrame {
         Component[] com = jpanel.getComponents();
         int cont = 0;
         for (Component component : com) {
-            if (component instanceof JTextField) {
+            if (component instanceof JFormattedTextField) {
                 JTextField tf = (JTextField) component;
-                if (!tf.getText().equals("")) {
+                if (tf.getText().trim().charAt(0) == '.') {
+
                     cont += 1;
+                } else {
+                    if (tf.getText().trim().charAt(1) == ' ') {
+                        cont += 1;
+                       
+
+                    }
+
+                }
+
+            } else {
+                if (component instanceof JTextField) {
+                    JTextField tf = (JTextField) component;
+                    if (tf.getText().isEmpty()) {
+                        cont += 1;
+                    }
                 }
             }
-           
+
         }
+
+        String telefone = tfTelefoneCad.getText().trim();
+
+        System.out.println("Q: " + cont);
+
         return cont;
     }
 

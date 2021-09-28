@@ -124,6 +124,8 @@ public class Consulta extends javax.swing.JInternalFrame {
         jlSelecioneConsultaEx = new javax.swing.JLabel();
         cbxConsultaExc = new javax.swing.JComboBox<>();
 
+        setTitle("Consulta");
+
         jTabbedPane1.setDoubleBuffered(true);
 
         cadastrar.setEnabled(false);
