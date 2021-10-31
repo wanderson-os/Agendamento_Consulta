@@ -31,7 +31,14 @@ public class ConsultaDao {
     ArrayList<ConsultaModel> consultas = null;
 
     public int cadastrar(ConsultaModel consulta) {
-        conn = Conexao.getConexao();
+
+        try {
+            conn = Conexao.getConexao();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         String sql;
         int ret = 0;
         PreparedStatement pStatement = null;
@@ -47,7 +54,6 @@ public class ConsultaDao {
             pStatement.close();
             ret = 1;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao incluir");
         }
 
         fecharConexao();
@@ -55,7 +61,12 @@ public class ConsultaDao {
     }
 
     public int alterar(ConsultaModel consulta, int crm, String cpf) {
-        conn = Conexao.getConexao();
+    try {
+            conn = Conexao.getConexao();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String sql;
         int ret = 0;
         PreparedStatement pStatement = null;
@@ -73,7 +84,6 @@ public class ConsultaDao {
             ret = 1;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao alterar");
         }
 
         fecharConexao();
@@ -81,7 +91,12 @@ public class ConsultaDao {
     }
 
     public int excluir(ConsultaModel consulta) {
-        conn = Conexao.getConexao();
+    try {
+            conn = Conexao.getConexao();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String sql;
         int ret = 0;
         PreparedStatement pStatement = null;
@@ -95,7 +110,6 @@ public class ConsultaDao {
             ret = 1;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Excluir");
         }
 
         fecharConexao();
@@ -104,7 +118,12 @@ public class ConsultaDao {
     }
 
     public ArrayList<ConsultaModel> listar() {
-        conn = Conexao.getConexao();
+    try {
+            conn = Conexao.getConexao();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String sql;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
@@ -130,7 +149,6 @@ public class ConsultaDao {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listar!");
 
         }
         fecharConexao();
@@ -142,7 +160,6 @@ public class ConsultaDao {
         try {
             conn.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao fechar conexão");
         }
     }
 

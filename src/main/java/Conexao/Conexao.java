@@ -2,12 +2,23 @@ package Conexao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 import javax.swing.JOptionPane;
 
 public class Conexao {
 
-    public static Connection getConexao() {
+    private static Connection conn;
+    private static boolean erro;
+
+    public static Connection getConexao() throws SQLException {
+        if ((conn == null) || (conn.isClosed())) {
+            conn = FabricaDeConexoes();
+        }
+        return conn;
+    }
+
+    public static Connection FabricaDeConexoes() {
         String url;
         try {
 
@@ -20,7 +31,7 @@ public class Conexao {
             return DriverManager.getConnection(url, props);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro na conexão !!!");
+
         }
 
         return null;

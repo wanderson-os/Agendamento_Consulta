@@ -24,7 +24,12 @@ public class MedicoDao {
     ArrayList<MedicoModel> medicos = null;
 
     public int cadastrar(MedicoModel medico) {
-        conn = Conexao.getConexao();
+        try {
+            conn = Conexao.getConexao();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String sql;
         int ret = 0;
         PreparedStatement pStatement = null;
@@ -39,7 +44,6 @@ public class MedicoDao {
             ret = 1;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao incluir");
         }
 
         fecharConexao();
@@ -47,7 +51,12 @@ public class MedicoDao {
     }
 
     public int alterar(MedicoModel medico) {
-        conn = Conexao.getConexao();
+        try {
+            conn = Conexao.getConexao();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String sql;
         int ret = 0;
         PreparedStatement pStatement = null;
@@ -63,7 +72,6 @@ public class MedicoDao {
             ret = 1;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao alterar");
         }
 
         fecharConexao();
@@ -71,7 +79,12 @@ public class MedicoDao {
     }
 
     public int excluir(MedicoModel medico) {
-        conn = Conexao.getConexao();
+    try {
+            conn = Conexao.getConexao();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String sql;
         int ret = 0;
         PreparedStatement pStatement = null;
@@ -85,7 +98,6 @@ public class MedicoDao {
             ret = 1;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Excluir");
         }
 
         fecharConexao();
@@ -94,7 +106,12 @@ public class MedicoDao {
     }
 
     public ArrayList<MedicoModel> listar() {
-        conn = Conexao.getConexao();
+    try {
+            conn = Conexao.getConexao();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         String sql;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
@@ -117,7 +134,6 @@ public class MedicoDao {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listar!");
 
         }
         fecharConexao();
@@ -129,7 +145,6 @@ public class MedicoDao {
         try {
             conn.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao fechar conexão");
         }
     }
 }
